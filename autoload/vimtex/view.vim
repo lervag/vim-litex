@@ -118,6 +118,8 @@ function! vimtex#view#inverse_search(line, filename, column = 0) abort
   endif
   redraw
 
+  call vimtex#ui#blink()
+
   if exists('#User#VimtexEventViewReverse')
     doautocmd <nomodeline> User VimtexEventViewReverse
   endif

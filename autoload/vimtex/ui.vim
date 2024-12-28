@@ -166,6 +166,21 @@ function! vimtex#ui#get_winwidth() abort
   return winwidth(0) - l:numwidth - l:foldwidth - l:signwidth
 endfunction
 
+function! vimtex#ui#blink() abort
+  call sign_define('vimtexblink', #{ linehl: 'VimtexBlink' })
+
+  for i in range(1, 4)
+    call sign_place(1, 'vimtex', 'vimtexblink', '', #{ lnum: '.' })
+    redraw
+    sleep 150m
+    call sign_unplace('vimtex')
+    redraw
+    sleep 150m
+  endfor
+
+  call sign_undefine("vimtexblink")
+endfunction
+
 
 function! s:echo_string(msg, opts) abort
   echohl VimtexMsg
