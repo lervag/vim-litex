@@ -4,7 +4,7 @@
 " Email:      karl.yngve@gmail.com
 "
 
-function! vimtex#ui#nvim#confirm(prompt) abort " {{{1
+function! vimtex#ui#nvim#confirm(prompt) abort
   let l:content = [s:formatted_to_string(a:prompt)]
   let l:content += ['']
   let l:content += ['  y = Yes']
@@ -31,8 +31,7 @@ function! vimtex#ui#nvim#confirm(prompt) abort " {{{1
   return l:input ==? 'y'
 endfunction
 
-" }}}1
-function! vimtex#ui#nvim#input(options) abort " {{{1
+function! vimtex#ui#nvim#input(options) abort
   if has_key(a:options, 'completion')
     " We can't replicate completion, so let's just fall back.
     return vimtex#ui#vim#input(a:options)
@@ -86,8 +85,7 @@ function! vimtex#ui#nvim#input(options) abort " {{{1
   return l:value
 endfunction
 
-" }}}1
-function! vimtex#ui#nvim#select(options, list) abort " {{{1
+function! vimtex#ui#nvim#select(options, list) abort
   let l:length = len(a:list)
   let l:digits = len(l:length)
 
@@ -140,9 +138,7 @@ function! vimtex#ui#nvim#select(options, list) abort " {{{1
   return l:value
 endfunction
 
-" }}}1
-
-function! vimtex#ui#nvim#popup(cfg) abort " {{{1
+function! vimtex#ui#nvim#popup(cfg) abort
   let l:popup = extend({
         \ 'content': [],
         \ 'padding': 1,
@@ -239,9 +235,8 @@ function! vimtex#ui#nvim#popup(cfg) abort " {{{1
   return l:popup
 endfunction
 
-" }}}1
 
-function! s:formatted_to_string(list_or_string) abort " {{{1
+function! s:formatted_to_string(list_or_string) abort
   " The input can be a string or an echo-formatted list (see vimtex#ui#echo).
   " If the latter, then we must "flatten" and join it.
   if type(a:list_or_string) == v:t_string
@@ -253,5 +248,3 @@ function! s:formatted_to_string(list_or_string) abort " {{{1
         \ { _, x -> type(x) == v:t_list ? x[1] : x })
   return join(l:strings, '')
 endfunction
-
-" }}}1
