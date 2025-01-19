@@ -4,7 +4,7 @@
 " Email:      karl.yngve@gmail.com
 "
 
-function! vimtex#ui#echo(input, ...) abort " {{{1
+function! vimtex#ui#echo(input, ...) abort
   if empty(a:input) | return | endif
   let l:opts = extend({'indent': 0}, a:0 > 0 ? a:1 : {})
 
@@ -19,14 +19,11 @@ function! vimtex#ui#echo(input, ...) abort " {{{1
   endif
 endfunction
 
-" }}}1
-
-function! vimtex#ui#confirm(prompt) abort " {{{1
+function! vimtex#ui#confirm(prompt) abort
   return vimtex#ui#{g:vimtex_ui_method.confirm}#confirm(a:prompt)
 endfunction
 
-" }}}1
-function! vimtex#ui#input(options) abort " {{{1
+function! vimtex#ui#input(options) abort
   let l:options = extend({
         \ 'prompt': '> ',
         \ 'text': '',
@@ -36,8 +33,7 @@ function! vimtex#ui#input(options) abort " {{{1
   return vimtex#ui#{g:vimtex_ui_method.input}#input(l:options)
 endfunction
 
-" }}}1
-function! vimtex#ui#menu(actions) abort " {{{1
+function! vimtex#ui#menu(actions) abort
   " Argument: The 'actions' argument is a dictionary/object which contains
   "   a list of menu items and corresponding actions (dict functions).
   "   Something like this:
@@ -69,8 +65,7 @@ function! vimtex#ui#menu(actions) abort " {{{1
   endtry
 endfunction
 
-" }}}1
-function! vimtex#ui#select(container, ...) abort " {{{1
+function! vimtex#ui#select(container, ...) abort
   let l:options = extend(
         \ {
         \   'prompt': 'Please choose item:',
@@ -100,9 +95,7 @@ function! vimtex#ui#select(container, ...) abort " {{{1
   return l:index
 endfunction
 
-" }}}1
-
-function! vimtex#ui#get_number(max, digits, force_choice, do_echo) abort " {{{1
+function! vimtex#ui#get_number(max, digits, force_choice, do_echo) abort
   let l:choice = ''
 
   if a:do_echo
@@ -140,9 +133,7 @@ function! vimtex#ui#get_number(max, digits, force_choice, do_echo) abort " {{{1
   return l:choice - 1
 endfunction
 
-" }}}1
-
-function! vimtex#ui#get_winwidth() abort " {{{1
+function! vimtex#ui#get_winwidth() abort
   let l:numwidth = (&number || &relativenumber)
         \ ? max([&numberwidth, strlen(line('$')) + 1])
         \ : 0
@@ -175,16 +166,29 @@ function! vimtex#ui#get_winwidth() abort " {{{1
   return winwidth(0) - l:numwidth - l:foldwidth - l:signwidth
 endfunction
 
-" }}}1
+function! vimtex#ui#blink() abort
+  call sign_define('vimtexblink', #{ linehl: 'VimtexBlink' })
 
-function! s:echo_string(msg, opts) abort " {{{1
+  for i in range(1, 4)
+    call sign_place(1, 'vimtex', 'vimtexblink', '', #{ lnum: '.' })
+    redraw
+    sleep 150m
+    call sign_unplace('vimtex')
+    redraw
+    sleep 150m
+  endfor
+
+  call sign_undefine("vimtexblink")
+endfunction
+
+
+function! s:echo_string(msg, opts) abort
   echohl VimtexMsg
   echo repeat(' ', a:opts.indent) . a:msg
   echohl None
 endfunction
 
-" }}}1
-function! s:echo_formatted(parts, opts) abort " {{{1
+function! s:echo_formatted(parts, opts) abort
   echo repeat(' ', a:opts.indent)
   try
     for l:part in a:parts
@@ -202,11 +206,8 @@ function! s:echo_formatted(parts, opts) abort " {{{1
   endtry
 endfunction
 
-" }}}1
-function! s:echo_dict(dict, opts) abort " {{{1
+function! s:echo_dict(dict, opts) abort
   for [l:key, l:val] in items(a:dict)
     call s:echo_formatted([['Label', l:key . ': '], l:val], a:opts)
   endfor
 endfunction
-
-" }}}1

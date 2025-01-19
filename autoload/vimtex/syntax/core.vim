@@ -2599,3 +2599,5 @@ function! s:gather_newtheorems() abort " {{{1
 endfunction
 
 " }}}1
+
+" vim: set fdm=marker

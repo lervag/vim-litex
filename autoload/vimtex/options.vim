@@ -628,6 +628,7 @@ function! s:init_highlights() abort " {{{1
         \ ['VimtexWarning', 'WarningMsg'],
         \ ['VimtexError', 'Error'],
         \ ['VimtexFatal', 'ErrorMsg'],
+        \ ['VimtexBlink', 'PMenu'],
         \ ['VimtexTocHelp', 'helpVim'],
         \ ['VimtexTocHelpKey', 'ModeMsg'],
         \ ['VimtexTocHelpLayerOn', 'Statement'],
