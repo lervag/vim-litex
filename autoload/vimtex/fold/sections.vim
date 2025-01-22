@@ -35,7 +35,8 @@ function! s:folder.init() abort dict " {{{1
   let self.re.secpat1 = self.re.sections . '\*?\s*\{\zs.*'
   let self.re.secpat2 = self.re.sections . '\*?\s*\[\zs.*'
 
-  let self.re.fold_re = '\\%(' . join(self.parts + self.sections, '|') . ')'
+  let self.re.fold_re = '\\%(' .. join(self.parts + self.sections, '|') .. ')'
+  let self.re.fold_re_comment = '^\s*\% Fake'
 
   return self
 endfunction
