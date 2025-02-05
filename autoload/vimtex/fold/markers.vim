@@ -27,7 +27,8 @@ function! s:folder.init() abort dict " {{{1
         \ ['^.*\ze\s*%', ''],
         \]
 
-  let self.re.fold_re = escape(self.open . '|' . self.close, '{}%+*.')
+  let self.re.fold_re = escape(self.open .. '|' .. self.close, '{}%+*.')
+  let self.re.fold_re_comment = escape(self.open .. '|' .. self.close, '{}%+*.')
 
   return self
 endfunction

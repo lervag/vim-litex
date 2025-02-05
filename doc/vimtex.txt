@@ -1897,11 +1897,6 @@ OPTIONS                                                        *vimtex-options*
                         corresponding "real" sections. The fold title is the
                         provided title with the `Fake...` part prepended.
 
-    <comment_pkg>       Fold `\begin{comments} ... \end{comments}` and disable
-                        folding inside the environment.
-
-    <comments>          Fold multiline comments. This is disabled by default.
-
     <markers>           Fold on vim-style markers inside comments, that is,
                         pairs of e.g. `{{{` and `}}}` (the default markers).
                         |regex| patterns for the opening and closing markers

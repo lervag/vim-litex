@@ -54,8 +54,8 @@ function! vimtex#fold#init_state(state) abort " {{{1
         \ . '|^\s*\]\s*%(\{|$)'
         \ . '|^\s*}'
   let a:state.fold_re_next = ''
+  let a:state.fold_re_comment = ''
   for l:name in [
-        \ 'comment_pkg',
         \ 'preamble',
         \ 'cmd_single',
         \ 'cmd_single_opt',
@@ -63,22 +63,28 @@ function! vimtex#fold#init_state(state) abort " {{{1
         \ 'cmd_addplot',
         \ 'sections',
         \ 'markers',
-        \ 'comments',
         \ 'items',
         \ 'envs',
         \ 'env_options',
         \]
     let l:type = get(a:state.fold_types_dict, l:name, {})
-    if !empty(l:type)
-      call add(a:state.fold_types_ordered, l:type)
-      if exists('l:type.re.fold_re')
-        let a:state.fold_re .= '|' . l:type.re.fold_re
-      endif
-      if exists('l:type.re.fold_re_next')
-        let a:state.fold_re_next .=
-              \ (empty(a:state.fold_re_next) ? '\v' : '|')
-              \ . l:type.re.fold_re_next
-      endif
+    if empty(l:type) | continue | endif
+
+    call add(a:state.fold_types_ordered, l:type)
+    if exists('l:type.re.fold_re')
+      let a:state.fold_re .= '|' .. l:type.re.fold_re
+    endif
+
+    if exists('l:type.re.fold_re_next')
+      let a:state.fold_re_next .=
+            \ (empty(a:state.fold_re_next) ? '\v' : '|')
+            \ .. l:type.re.fold_re_next
+    endif
+
+    if exists('l:type.re.fold_re_comment')
+      let a:state.fold_re_comment .=
+            \ (empty(a:state.fold_re_comment) ? '\v' : '|')
+            \ .. l:type.re.fold_re_comment
     endif
   endfor
 endfunction
@@ -108,6 +114,18 @@ function! vimtex#fold#level(lnum) abort " {{{1
   " Optimize: Filter out irrelevant lines
   if l:line !~# b:vimtex.fold_re && l:next !~# b:vimtex.fold_re_next
     return '='
+  endif
+
+  " Handle comments by considering the syntax
+  if vimtex#syntax#in_comment(a:lnum, 1)
+        \ && l:line !~# b:vimtex.fold_re_comment
+    if l:line =~# '^\s*\\begin\s*{comment}'
+      return 'a1'
+    elseif l:line =~# '^\s*\\end\s*{comment}'
+      return 's1'
+    else
+      return '='
+    endif
   endif
 
   for l:type in b:vimtex.fold_types_ordered

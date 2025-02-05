@@ -11,7 +11,6 @@ nnoremap q :qall!<cr>
 call vimtex#log#set_silent()
 
 let g:vimtex_fold_enabled = 1
-let g:vimtex_fold_types = {'comments' : {'enabled': 1}}
 
 silent edit test-other.tex
 
@@ -19,7 +18,7 @@ if empty($INMAKE) | finish | endif
 
 
 call assert_equal(1, foldlevel(1))
-call assert_equal(2, foldlevel(2))
+call assert_equal(1, foldlevel(2))
 call assert_equal(2, foldlevel(34))
 call assert_equal(2, foldlevel(48))
 call assert_equal(3, foldlevel(128))
