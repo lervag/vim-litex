@@ -339,6 +339,7 @@ function! s:init_compiler(options) abort " {{{1
         \ 'latexmk',
         \ 'latexrun',
         \ 'tectonic',
+        \ 'texpresso',
         \], l:method) < 0
     call vimtex#log#error('Error! Invalid compiler method: ' . l:method)
     let l:method = 'latexmk'
