@@ -193,7 +193,7 @@ FEATURE OVERVIEW                                              *vimtex-features*
     `dsc`/`dse`/`ds$`/`dsd`
   - Change the surrounding command, environment or delimiter with
     `csc`/`cse`/`cs$`/`csd`
-  - Toggle starred command or environment with `tsc`/`tse`
+  - Toggle starred command or environment with `tsc`/`tss`
   - Toggle inline and displaymath with `ts$`
   - Toggle between e.g. `()` and `\left(\right)` with `tsd`/`tsD`
   - Toggle (inline) fractions with `tsf`

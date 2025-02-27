@@ -270,7 +270,9 @@ by default and must be manually enabled.
     `dsc`/`dse`/`ds$`/`dsd`
   - Change the surrounding command, environment or delimiter with
     `csc`/`cse`/`cs$`/`csd`
-  - Toggle starred command or environment with `tsc`/`tse`
+  - Toggle starred command or environment with `tsc`/`tss`
+  - Toggle between complementary environments with `tse` (see v2.16 release
+    notes)
   - Toggle inline and displaymath with `ts$`
   - Toggle between e.g. `()` and `\left(\right)` with `tsd`
   - Toggle (inline) fractions with `tsf`
